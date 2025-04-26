@@ -21,4 +21,5 @@ void AAF_GameMode::StartPlay() {
 		// some code to explicitly spawn AF_Pawn instance.
 	}
 	localController->Possess(localPawn);
+	localController->bShowMouseCursor = 1;
 }
