@@ -41,16 +41,21 @@ void AAF_Pawn::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 	PlayerInputComponent->BindAxis(TEXT("PanXAxis"), this, &AAF_Pawn::PanXAxis);
 	PlayerInputComponent->BindAxis(TEXT("PanYAxis"), this, &AAF_Pawn::PanYAxis);
 	PlayerInputComponent->BindAxis(TEXT("ChangeZoom"), this, &AAF_Pawn::ChangeZoom);
-
+	
 }
 
 void AAF_Pawn::PanXAxis(float axisValue) {
+	if (axisValue != 0) {
+		GEngine->AddOnScreenDebugMessage(-1, 0.5f, FColor::Yellow, FString::Printf(TEXT("X-Axis input : %f"), axisValue * 10));
+	}
 	cameraArm->AddRelativeRotation(FRotator(0.0f, axisValue, 0.0f));
 	return;
 }
 
 void AAF_Pawn::PanYAxis(float axisValue) {
-	GEngine->AddOnScreenDebugMessage(-1, 0.5f, FColor::Yellow, FString::Printf(TEXT("YAxis input : %f"), axisValue * 10));
+	if (axisValue != 0) {
+		GEngine->AddOnScreenDebugMessage(-1, 0.5f, FColor::Yellow, FString::Printf(TEXT("Y-Axis input : %f"), axisValue * 10));
+	}
 	cameraArm->AddRelativeRotation(FRotator(axisValue, 0.0f, 0.0f));
 	return;
 }
@@ -62,9 +67,8 @@ void AAF_Pawn::ChangeZoom(float increment) {
 	//	return;
 	//}
 
-	if (increment == 0) {
-		//GEngine->AddOnScreenDebugMessage(-1, 0.5f, FColor::Yellow, TEXT("Scroll input detected"));
-		//GEngine->AddOnScreenDebugMessage(-1, 0.5f, FColor::Yellow, FString::Printf(TEXT("Scroll input : %f"), increment*10));
+	if (increment != 0) {
+		GEngine->AddOnScreenDebugMessage(-1, 0.5f, FColor::Yellow, FString::Printf(TEXT("Scroll input : %f"), increment * 10));
 	}
 
 	// sign flip to scroll-up = zoom in w/o it's a zoom out
