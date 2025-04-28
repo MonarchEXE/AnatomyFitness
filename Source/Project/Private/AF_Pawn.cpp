@@ -63,9 +63,12 @@ void AAF_Pawn::PanYAxis(float axisValue) {
 void AAF_Pawn::ChangeZoom(float increment) {
 	
 
-	//if (!(cameraArm->TargetArmLength >= 300.f && cameraArm->TargetArmLength <= 5000.f)) {
-	//	return;
-	//}
+	if (!(cameraArm->TargetArmLength + increment * -10 >= 300.f)) {
+		return;
+	}
+	else if (!(cameraArm->TargetArmLength + increment * -10 <= 700.f)) {
+		return;
+	}
 
 	if (increment != 0) {
 		GEngine->AddOnScreenDebugMessage(-1, 0.5f, FColor::Yellow, FString::Printf(TEXT("Scroll input : %f"), increment * 10));
