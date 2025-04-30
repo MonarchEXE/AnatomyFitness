@@ -4,7 +4,7 @@
 #include "AF_Pawn.h"
 
 // Sets default values
-AAF_Pawn::AAF_Pawn()
+AAF_Pawn::AAF_Pawn() : Super()
 {
  	// Set this pawn to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
@@ -12,11 +12,15 @@ AAF_Pawn::AAF_Pawn()
 
 	modelMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Body"));
 	modelMesh->SetupAttachment(RootComponent);
+	boxComponent = CreateDefaultSubobject<UBoxComponent>(TEXT("Collision Component"));
+	boxComponent->SetupAttachment(modelMesh);
 	cameraArm = CreateDefaultSubobject<USpringArmComponent>(TEXT("Camera Arm"));
 	cameraArm->SetupAttachment(modelMesh);
 	userCam = CreateDefaultSubobject<UCameraComponent>(TEXT("User Camera"));
 	userCam->SetupAttachment(cameraArm);
 
+	infoWidget = CreateDefaultSubobject<UWidgetComponent>(TEXT("Name card"));
+	infoWidget->SetupAttachment(modelMesh);
 }
 
 // Called when the game starts or when spawned
@@ -24,6 +28,10 @@ void AAF_Pawn::BeginPlay()
 {
 	Super::BeginPlay();
 	
+	// default the Widget Class to Info Card
+	//infoWidget->SetWidgetClass(UAF_InfoCard::StaticClass());
+	infoWidget->SetVisibility(true);
+	infoWidget->SetWidgetSpace(EWidgetSpace::Screen);
 }
 
 // Called every frame

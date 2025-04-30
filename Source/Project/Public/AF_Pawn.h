@@ -5,7 +5,11 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Pawn.h"
 #include "GameFramework/SpringArmComponent.h"
+#include "Components/WidgetComponent.h"
+#include "Components/BoxComponent.h"
 #include "Camera/CameraComponent.h"
+
+#include "AF_InfoCard.h"
 
 #include "AF_Pawn.generated.h"
 
@@ -30,12 +34,17 @@ protected:
 	virtual void BeginPlay() override;
 
 private:
-	UPROPERTY(EditDefaultsOnly)
+	// temp collision model, will need to change depending on the component
+	UPROPERTY(VisibleAnywhere, Category = "Model")
+	UBoxComponent* boxComponent;
+	UPROPERTY(EditDefaultsOnly = Category = "Model")
 	UStaticMeshComponent* modelMesh;
 	UPROPERTY(EditDefaultsOnly, Category = "Camera")
 	USpringArmComponent* cameraArm;
 	UPROPERTY(EditDefaultsOnly, Category = "Camera")
 	UCameraComponent* userCam;
+	UPROPERTY(EditInstanceOnly)
+	UWidgetComponent* infoWidget;
 
 	void PanXAxis(float axisValue);
 	void PanYAxis(float axisValue);
