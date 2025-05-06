@@ -4,7 +4,7 @@
 #include "AF_GameMode.h"
 
 AAF_GameMode::AAF_GameMode() {
-	DefaultPawnClass = AAF_Pawn::StaticClass();
+	/*DefaultPawnClass = AAF_Pawn::StaticClass();*/
 	return;
 }
 
@@ -24,4 +24,14 @@ void AAF_GameMode::StartPlay() {
 
 	// persistent mouse cursor
 	localController->bShowMouseCursor = 1;
+
+	// enables mouse events
+	localController->bEnableMouseOverEvents = true;
+	if (localController->bEnableMouseOverEvents) {
+		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Green, TEXT("PlayerController: Cursor detection enabled"));
+	}
+	else {
+		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("PlayerController: Cursor detection not enabled"));
+	}
+	
 }
