@@ -6,7 +6,6 @@
 #include "GameFramework/Pawn.h"
 #include "GameFramework/SpringArmComponent.h"
 #include "Components/WidgetComponent.h"
-#include "Components/BoxComponent.h"
 #include "Camera/CameraComponent.h"
 
 #include "AF_InfoCard.h"
@@ -35,8 +34,6 @@ protected:
 
 private:
 	// temp collision model, will need to change depending on the component
-	UPROPERTY(VisibleAnywhere, Category = "Model")
-	UBoxComponent* boxComponent;
 	UPROPERTY(EditDefaultsOnly = Category = "Model")
 	UStaticMeshComponent* modelMesh;
 	UPROPERTY(EditDefaultsOnly, Category = "Camera")
@@ -49,4 +46,9 @@ private:
 	void PanXAxis(float axisValue);
 	void PanYAxis(float axisValue);
 	void ChangeZoom(float increment);
+
+	UFUNCTION()
+	void ShowObjectTitle(UPrimitiveComponent* component);
+	UFUNCTION()
+	void HideObjectTitle(UPrimitiveComponent* component);
 };

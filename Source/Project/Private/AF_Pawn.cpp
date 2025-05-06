@@ -12,8 +12,6 @@ AAF_Pawn::AAF_Pawn() : Super()
 
 	modelMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Body"));
 	modelMesh->SetupAttachment(RootComponent);
-	boxComponent = CreateDefaultSubobject<UBoxComponent>(TEXT("Collision Component"));
-	boxComponent->SetupAttachment(modelMesh);
 	cameraArm = CreateDefaultSubobject<USpringArmComponent>(TEXT("Camera Arm"));
 	cameraArm->SetupAttachment(modelMesh);
 	userCam = CreateDefaultSubobject<UCameraComponent>(TEXT("User Camera"));
@@ -30,8 +28,11 @@ void AAF_Pawn::BeginPlay()
 	
 	// default the Widget Class to Info Card
 	//infoWidget->SetWidgetClass(UAF_InfoCard::StaticClass());
-	infoWidget->SetVisibility(true);
+	infoWidget->SetVisibility(false);
 	infoWidget->SetWidgetSpace(EWidgetSpace::Screen);
+
+	modelMesh->OnBeginCursorOver.AddDynamic(this, &AAF_Pawn::ShowObjectTitle);
+	modelMesh->OnEndCursorOver.AddDynamic(this, &AAF_Pawn::HideObjectTitle);
 }
 
 // Called every frame
@@ -54,10 +55,10 @@ void AAF_Pawn::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 
 void AAF_Pawn::PanXAxis(float axisValue) {
 	if (axisValue != 0) {
-		GEngine->AddOnScreenDebugMessage(-1, 0.5f, FColor::Yellow, FString::Printf(TEXT("X-Axis input: %f"), axisValue * 10));
+		//GEngine->AddOnScreenDebugMessage(-1, 0.5f, FColor::Yellow, FString::Printf(TEXT("X-Axis input: %f"), axisValue * 10));
 	}
 	else {
-		GEngine->AddOnScreenDebugMessage(-1, 0.5f, FColor::Yellow, FString::Printf(TEXT("Current Yaw: %f"), cameraArm->GetRelativeRotation().Yaw));
+		//GEngine->AddOnScreenDebugMessage(-1, 0.5f, FColor::Yellow, FString::Printf(TEXT("Current Yaw: %f"), cameraArm->GetRelativeRotation().Yaw));
 	}
 	cameraArm->AddRelativeRotation(FRotator(0.0f, axisValue, 0.0f));
 	return;
@@ -72,10 +73,10 @@ void AAF_Pawn::PanYAxis(float axisValue) {
 	}
 	
 	if (axisValue != 0) {
-		GEngine->AddOnScreenDebugMessage(-1, 0.5f, FColor::Yellow, FString::Printf(TEXT("Y-Axis input: %f"), axisValue * 10));
+		//GEngine->AddOnScreenDebugMessage(-1, 0.5f, FColor::Yellow, FString::Printf(TEXT("Y-Axis input: %f"), axisValue * 10));
 	}
 	else {
-		GEngine->AddOnScreenDebugMessage(-1, 0.5f, FColor::Yellow, FString::Printf(TEXT("Current Pitch: %f"), cameraArm->GetRelativeRotation().Pitch));
+		//GEngine->AddOnScreenDebugMessage(-1, 0.5f, FColor::Yellow, FString::Printf(TEXT("Current Pitch: %f"), cameraArm->GetRelativeRotation().Pitch));
 	}
 
 	cameraArm->AddRelativeRotation(FRotator(axisValue, 0.0f, 0.0f));
@@ -98,5 +99,17 @@ void AAF_Pawn::ChangeZoom(float increment) {
 
 	// sign flip to scroll-up = zoom in w/o it's a zoom out
 	cameraArm->TargetArmLength += increment * -10;
+	return;
+}
+
+void AAF_Pawn::ShowObjectTitle(UPrimitiveComponent* component) {
+	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Yellow, TEXT("PlayerController: Mouse cursor detected."));
+	infoWidget->SetVisibility(true);
+	return;
+}
+
+void AAF_Pawn::HideObjectTitle(UPrimitiveComponent* component) {
+	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Yellow, TEXT("PlayerController: Mouse cursor left."));
+	infoWidget->SetVisibility(false);
 	return;
 }
