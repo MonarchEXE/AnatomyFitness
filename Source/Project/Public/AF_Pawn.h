@@ -33,13 +33,16 @@ protected:
 	virtual void BeginPlay() override;
 
 private:
-	// temp collision model, will need to change depending on the component
+	bool bInfoWidgetExpanded;
+
 	UPROPERTY(EditDefaultsOnly = Category = "Model")
 	UStaticMeshComponent* modelMesh;
 	UPROPERTY(EditDefaultsOnly, Category = "Camera")
 	USpringArmComponent* cameraArm;
 	UPROPERTY(EditDefaultsOnly, Category = "Camera")
 	UCameraComponent* userCam;
+	UPROPERTY(EditInstanceOnly)
+	UWidgetComponent* nameWidget;
 	UPROPERTY(EditInstanceOnly)
 	UWidgetComponent* infoWidget;
 
@@ -51,4 +54,6 @@ private:
 	void ShowObjectTitle(UPrimitiveComponent* component);
 	UFUNCTION()
 	void HideObjectTitle(UPrimitiveComponent* component);
+	UFUNCTION()
+	void ExpandWidget(UPrimitiveComponent* component, FKey key);
 };

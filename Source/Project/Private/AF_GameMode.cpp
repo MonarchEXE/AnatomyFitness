@@ -33,5 +33,12 @@ void AAF_GameMode::StartPlay() {
 	else {
 		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("PlayerController: Cursor detection not enabled"));
 	}
-	
+
+	localController->bEnableClickEvents = true;
+	if (localController->bEnableMouseOverEvents) {
+		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Green, TEXT("PlayerController: Click events enabled"));
+	}
+	else {
+		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("PlayerController: Click events not enabled"));
+	}
 }
