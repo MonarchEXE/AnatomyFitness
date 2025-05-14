@@ -18,16 +18,32 @@ class PROJECT_API UAF_InfoCard : public UUserWidget
 	GENERATED_BODY()
 	
 public:
+	bool bFilePathIsAbsolute;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (BindWidget), Category = "Card Info")
+	UTextBlock* cardText;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (BindWidget), Category = "Card Info")
+	UBorder* cardBox;
+
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Card Info")
+	FString filePath;
+	FString fileContent;
+	
 	UAF_InfoCard(const FObjectInitializer& ObjectInitializer);
+
+
 
 protected:
 	virtual void NativeConstruct() override;
 
 private:
-	UPROPERTY( EditInstanceOnly, Category = "Card Info")
-	UTextBlock* cardTitle;
-	UPROPERTY( EditInstanceOnly, Category = "Card Info")
-	UTextBlock* cardInfo;
-	UPROPERTY( EditInstanceOnly, Category = "Card Style")
-	UBorder* cardBox;
+	void ReadFileContent();
+
+	//UPROPERTY(BlueprintReadWrite, meta = (BindWidget), Category = "Card Info")
+	//UTextBlock* cardTitle;
+	//UPROPERTY(BlueprintReadWrite, meta = (BindWidget), Category = "Card Info")
+	//UTextBlock* cardInfo;
+	//UPROPERTY(BlueprintReadWrite, meta = (BindWidget), Category = "Card Info")
+	//UBorder* cardBox;
+
 };
