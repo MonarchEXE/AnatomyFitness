@@ -5,10 +5,14 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Pawn.h"
 #include "GameFramework/SpringArmComponent.h"
+#include "Components/SkeletalMeshComponent.h"
 #include "Components/WidgetComponent.h"
+#include "Components/ChildActorComponent.h"
+#include "Kismet/GameplayStatics.h"
 #include "Camera/CameraComponent.h"
 
 #include "AF_InfoCard.h"
+#include "AF_BodyPart.h"
 
 #include "AF_Pawn.generated.h"
 
@@ -37,6 +41,8 @@ private:
 
 	UPROPERTY(EditDefaultsOnly, Category = "Model")
 	UStaticMeshComponent* modelMesh;
+	UPROPERTY(EditDefaultsOnly, Category = "Body Parts")
+	UAF_BodyPart* bodyPart_test;
 	UPROPERTY(EditDefaultsOnly, Category = "Camera")
 	USpringArmComponent* cameraArm;
 	UPROPERTY(EditDefaultsOnly, Category = "Camera")

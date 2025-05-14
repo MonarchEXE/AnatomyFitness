@@ -9,6 +9,8 @@ AAF_Pawn::AAF_Pawn() : Super()
  	// Set this pawn to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
+	bodyPart_test = CreateDefaultSubobject<UAF_BodyPart>(TEXT("Body Part"));
+	bodyPart_test->SetupAttachment(RootComponent);
 
 	modelMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Body"));
 	modelMesh->SetupAttachment(RootComponent);
