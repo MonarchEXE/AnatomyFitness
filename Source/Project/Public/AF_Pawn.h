@@ -35,25 +35,14 @@ protected:
 private:
 	bool bInfoWidgetExpanded;
 
-	UPROPERTY(EditDefaultsOnly = Category = "Model")
+	UPROPERTY(EditDefaultsOnly, Category = "Model")
 	UStaticMeshComponent* modelMesh;
 	UPROPERTY(EditDefaultsOnly, Category = "Camera")
 	USpringArmComponent* cameraArm;
 	UPROPERTY(EditDefaultsOnly, Category = "Camera")
 	UCameraComponent* userCam;
-	UPROPERTY(EditInstanceOnly)
-	UWidgetComponent* nameWidget;
-	UPROPERTY(EditInstanceOnly)
-	UWidgetComponent* infoWidget;
 
 	void PanXAxis(float axisValue);
 	void PanYAxis(float axisValue);
 	void ChangeZoom(float increment);
-
-	UFUNCTION()
-	void ShowObjectTitle(UPrimitiveComponent* component);
-	UFUNCTION()
-	void HideObjectTitle(UPrimitiveComponent* component);
-	UFUNCTION()
-	void ExpandWidget(UPrimitiveComponent* component, FKey key);
 };

@@ -19,12 +19,6 @@ AAF_Pawn::AAF_Pawn() : Super()
 	userCam = CreateDefaultSubobject<UCameraComponent>(TEXT("User Camera"));
 	userCam->SetupAttachment(cameraArm);
 
-	nameWidget = CreateDefaultSubobject<UWidgetComponent>(TEXT("Name card"));
-	nameWidget->SetupAttachment(modelMesh);
-
-	infoWidget = CreateDefaultSubobject<UWidgetComponent>(TEXT("Exercises card"));
-	infoWidget->SetupAttachment(modelMesh);
-
 	bInfoWidgetExpanded = false;
 }
 
@@ -32,18 +26,7 @@ AAF_Pawn::AAF_Pawn() : Super()
 void AAF_Pawn::BeginPlay()
 {
 	Super::BeginPlay();
-	
-	// default the Widget Class to Info Card
-	//infoWidget->SetWidgetClass(UAF_InfoCard::StaticClass());
-	infoWidget->SetVisibility(false);
-	infoWidget->SetWidgetSpace(EWidgetSpace::Screen);
 
-	nameWidget->SetVisibility(false);
-	nameWidget->SetWidgetSpace(EWidgetSpace::Screen);
-
-	modelMesh->OnBeginCursorOver.AddDynamic(this, &AAF_Pawn::ShowObjectTitle);
-	modelMesh->OnEndCursorOver.AddDynamic(this, &AAF_Pawn::HideObjectTitle);
-	modelMesh->OnClicked.AddDynamic(this, &AAF_Pawn::ExpandWidget);
 }
 
 // Called every frame
@@ -111,34 +94,4 @@ void AAF_Pawn::ChangeZoom(float increment) {
 	// sign flip to scroll-up = zoom in w/o it's a zoom out
 	cameraArm->TargetArmLength += increment * -10;
 	return;
-}
-
-void AAF_Pawn::ShowObjectTitle(UPrimitiveComponent* component) {
-	if (bInfoWidgetExpanded == true) {
-		return;
-	}
-	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Yellow, TEXT("PlayerController: Mouse cursor detected."));
-	nameWidget->SetVisibility(true);
-	return;
-}
-
-void AAF_Pawn::HideObjectTitle(UPrimitiveComponent* component) {
-	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Yellow, TEXT("PlayerController: Mouse cursor left."));
-	nameWidget->SetVisibility(false);
-	return;
-}
-
-void AAF_Pawn::ExpandWidget(UPrimitiveComponent* component, FKey key) {
-	if (infoWidget->IsWidgetVisible() == false) {
-		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Yellow, TEXT("PlayerController: Expanded info widget."));
-		// no need to check if it's arleady false shrug
-		nameWidget->SetVisibility(false);
-		infoWidget->SetVisibility(true);
-		bInfoWidgetExpanded = true;
-	}
-	else {
-		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Yellow, TEXT("PlayerController: Collapsed info widget."));
-		infoWidget->SetVisibility(false);
-		bInfoWidgetExpanded = false;
-	}
 }
